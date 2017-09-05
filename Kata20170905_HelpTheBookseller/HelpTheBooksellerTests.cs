@@ -20,13 +20,6 @@ namespace Kata20170905_HelpTheBookseller
         }
 
         [TestMethod]
-        public void input_BC_2_and_B_should_return_B_2()
-        {
-            StockSummaryShouldBe("(B : 2)", new[] { "BC 2" }, new[] { "B" });
-        }
-
-
-        [TestMethod]
         public void input_BC_2_and_A_should_return_A_0()
         {
             StockSummaryShouldBe("(A : 0)", new[] { "BC 2" }, new[] { "A" });
