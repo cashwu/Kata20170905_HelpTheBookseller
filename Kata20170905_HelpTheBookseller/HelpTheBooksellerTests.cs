@@ -25,6 +25,12 @@ namespace Kata20170905_HelpTheBookseller
             StockSummaryShouldBe("(A : 0)", new[] { "BC 2" }, new[] { "A" });
         }
 
+        [TestMethod]
+        public void input_AB_2_AC_1_and_A_should_return_A_3()
+        {
+            StockSummaryShouldBe("(A : 3)", new[] { "AB 2", "AC 1" }, new[] { "A" });
+        }
+
         private static void StockSummaryShouldBe(string expected, string[] lstOfArt, string[] lstOf1StLetter)
         {
             var stockList = new StockList();
@@ -37,10 +43,14 @@ namespace Kata20170905_HelpTheBookseller
     {
         public string stockSummary(string[] lstOfArt, string[] lstOf1stLetter)
         {
-            var art = lstOfArt[0].Split(' ');
             var artKey = lstOf1stLetter[0];
-            var sum = art[0].First().ToString() == artKey ? art[1] : "0";
-            
+            var sum = 0;
+            foreach (var art in lstOfArt)
+            {
+                var artKv = art.Split(' ');
+                sum += artKv[0].First().ToString() == artKey ? int.Parse(artKv[1]) : 0;
+            }
+
             return $"({artKey} : {sum})";
         }
     }
