@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -12,7 +13,7 @@ namespace Kata20170905_HelpTheBookseller
         {
             StockSummaryShouldBe("(A : 1)", new[] { "ABC 1" }, new[] { "A" });
         }
-
+        
         [TestMethod]
         public void input_ABC_2_and_A_should_return_A_2()
         {
@@ -31,6 +32,12 @@ namespace Kata20170905_HelpTheBookseller
             StockSummaryShouldBe("(A : 3)", new[] { "AB 2", "AC 1" }, new[] { "A" });
         }
 
+        [TestMethod]
+        public void input_AB_2_BC_1_and_A_B_should_return_A_2_B_1()
+        {
+            StockSummaryShouldBe("(A : 2) - (B : 1)", new[] { "AB 2", "BC 1" }, new[] { "A", "B" });
+        }
+
         private static void StockSummaryShouldBe(string expected, string[] lstOfArt, string[] lstOf1StLetter)
         {
             var stockList = new StockList();
@@ -42,16 +49,16 @@ namespace Kata20170905_HelpTheBookseller
     public class StockList
     {
         public string stockSummary(string[] lstOfArt, string[] lstOf1stLetter)
-        {
-            var artKey = lstOf1stLetter[0];
-            var sum = 0;
-            foreach (var art in lstOfArt)
+        { 
+            var dic = new Dictionary<string, int>();
+            foreach (var letter in lstOf1stLetter)
             {
-                var artKv = art.Split(' ');
-                sum += artKv[0].First().ToString() == artKey ? int.Parse(artKv[1]) : 0;
+                var val = lstOfArt.Where(a => a.StartsWith(letter))
+                                    .Sum(a => int.Parse(a.Split(' ')[1]));
+                dic.Add(letter, val);
             }
 
-            return $"({artKey} : {sum})";
+            return string.Join(" - ", dic.Select(a => $"({a.Key} : {a.Value})"));
         }
     }
 }
