@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Kata20170905_HelpTheBookseller
@@ -24,6 +25,13 @@ namespace Kata20170905_HelpTheBookseller
             StockSummaryShouldBe("(B : 2)", new[] { "BC 2" }, new[] { "B" });
         }
 
+
+        [TestMethod]
+        public void input_BC_2_and_A_should_return_A_0()
+        {
+            StockSummaryShouldBe("(A : 0)", new[] { "BC 2" }, new[] { "A" });
+        }
+
         private static void StockSummaryShouldBe(string expected, string[] lstOfArt, string[] lstOf1StLetter)
         {
             var stockList = new StockList();
@@ -36,7 +44,11 @@ namespace Kata20170905_HelpTheBookseller
     {
         public string stockSummary(string[] lstOfArt, string[] lstOf1stLetter)
         {
-            return $"({lstOf1stLetter[0]} : {lstOfArt[0].Split(' ')[1]})";
+            var art = lstOfArt[0].Split(' ');
+            var artKey = lstOf1stLetter[0];
+            var sum = art[0].First().ToString() == artKey ? art[1] : "0";
+            
+            return $"({artKey} : {sum})";
         }
     }
 }
