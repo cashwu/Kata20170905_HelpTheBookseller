@@ -18,6 +18,12 @@ namespace Kata20170905_HelpTheBookseller
             StockSummaryShouldBe("(A : 2)", new[] { "ABC 2" }, new[] { "A" });
         }
 
+        [TestMethod]
+        public void input_BC_2_and_B_should_return_B_2()
+        {
+            StockSummaryShouldBe("(B : 2)", new[] { "BC 2" }, new[] { "B" });
+        }
+
         private static void StockSummaryShouldBe(string expected, string[] lstOfArt, string[] lstOf1StLetter)
         {
             var stockList = new StockList();
