@@ -12,6 +12,12 @@ namespace Kata20170905_HelpTheBookseller
             StockSummaryShouldBe("(A : 1)", new[] { "ABC 1" }, new[] { "A" });
         }
 
+        [TestMethod]
+        public void input_ABC_2_and_A_should_return_A_2()
+        {
+            StockSummaryShouldBe("(A : 2)", new[] { "ABC 2" }, new[] { "A" });
+        }
+
         private static void StockSummaryShouldBe(string expected, string[] lstOfArt, string[] lstOf1StLetter)
         {
             var stockList = new StockList();
@@ -24,7 +30,7 @@ namespace Kata20170905_HelpTheBookseller
     {
         public string stockSummary(string[] lstOfArt, string[] lstOf1stLetter)
         {
-            return "(A : 1)";
+            return $"({lstOf1stLetter[0]} : {lstOfArt[0].Split(' ')[1]})";
         }
     }
 }
