@@ -13,7 +13,7 @@ namespace Kata20170905_HelpTheBookseller
         {
             StockSummaryShouldBe("(A : 1)", new[] { "ABC 1" }, new[] { "A" });
         }
-        
+
         [TestMethod]
         public void input_ABC_2_and_A_should_return_A_2()
         {
@@ -49,16 +49,16 @@ namespace Kata20170905_HelpTheBookseller
     public class StockList
     {
         public string stockSummary(string[] lstOfArt, string[] lstOf1stLetter)
-        { 
-            var dic = new Dictionary<string, int>();
-            foreach (var letter in lstOf1stLetter)
-            {
-                var val = lstOfArt.Where(a => a.StartsWith(letter))
-                                    .Sum(a => int.Parse(a.Split(' ')[1]));
-                dic.Add(letter, val);
-            }
+        {
+            var result = lstOf1stLetter
+                .Select(letter => $"({letter} : {SumOfLetter(lstOfArt, letter)})");
 
-            return string.Join(" - ", dic.Select(a => $"({a.Key} : {a.Value})"));
+            return string.Join(" - ", result);
+        }
+
+        private static int SumOfLetter(string[] lstOfArt, string letter)
+        {
+            return lstOfArt.Where(a => a.StartsWith(letter)).Sum(a => int.Parse(a.Split(' ')[1]));
         }
     }
 }
