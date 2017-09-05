@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Kata20170905_HelpTheBookseller
@@ -38,6 +36,12 @@ namespace Kata20170905_HelpTheBookseller
             StockSummaryShouldBe("(A : 2) - (B : 1)", new[] { "AB 2", "BC 1" }, new[] { "A", "B" });
         }
 
+        [TestMethod]
+        public void input_empty_and_A_should_return_empty()
+        {
+            StockSummaryShouldBe("", new string[0], new[] { "A" });
+        }
+
         private static void StockSummaryShouldBe(string expected, string[] lstOfArt, string[] lstOf1StLetter)
         {
             var stockList = new StockList();
@@ -50,15 +54,17 @@ namespace Kata20170905_HelpTheBookseller
     {
         public string stockSummary(string[] lstOfArt, string[] lstOf1stLetter)
         {
-            var result = lstOf1stLetter
-                .Select(letter => $"({letter} : {SumOfLetter(lstOfArt, letter)})");
+            if (lstOfArt.Length == 0)
+            {
+                return string.Empty;
+            }
 
-            return string.Join(" - ", result);
+            return string.Join(" - ", lstOf1stLetter.Select(l => $"({l} : {SumOf(lstOfArt, l)})"));
         }
 
-        private static int SumOfLetter(string[] lstOfArt, string letter)
+        private static int SumOf(string[] lstOfArt, string l)
         {
-            return lstOfArt.Where(a => a.StartsWith(letter)).Sum(a => int.Parse(a.Split(' ')[1]));
+            return lstOfArt.Where(a => a.StartsWith(l)).Sum(a => int.Parse(a.Split(' ')[1]));
         }
     }
 }
